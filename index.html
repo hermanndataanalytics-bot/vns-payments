@@ -209,13 +209,13 @@
                 const data = await res.json();
 
                 await emailjs.send("service_sqpgdob", "template_xsdd3v7", {
-                    plan_name: document.getElementById('display-plan').innerText,
-                    user_email: document.getElementById('email').value,
-                    tx_hash: document.getElementById('txid').value,
-                    receipt_url: data.data.url
-                });
-
-                document.getElementById('success-msg').classList.remove('hidden');
+					plan_name: document.getElementById('display-plan').innerText,
+					user_email: document.getElementById('email').value,
+					// Ovaina ho 'transaction_hash' mba hifanaraka amin'ny template EmailJS-nao
+					transaction_hash: document.getElementById('txid').value, 
+					receipt_url: data.data.url
+				});				
+				document.getElementById('success-msg').classList.remove('hidden');
                 btn.innerText = "Submitted ✅";
             } catch (e) {
                 alert("Upload Error");
