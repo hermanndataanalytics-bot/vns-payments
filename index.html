@@ -133,16 +133,35 @@
                 <button onclick="copyAddr()" class="w-full bg-gray-800 py-2 rounded-xl text-sm font-bold">Copy Address</button>
             </div>
 
-            <div class="glass p-8 rounded-3xl">
-                <h3 class="font-bold mb-6">Step 2: Verification</h3>
-                <input type="email" id="email" placeholder="Email Address" class="w-full bg-transparent border border-gray-800 p-4 rounded-xl mb-4 outline-none focus:border-blue-500">
-                <input type="text" id="txid" placeholder="Transaction Hash (TXID)" class="w-full bg-transparent border border-gray-800 p-4 rounded-xl mb-4 outline-none focus:border-blue-500">
-                <p class="text-xs text-gray-500 mb-2">Upload Proof (Screenshot)</p>
-                <input type="file" id="file" class="w-full text-sm text-gray-500 mb-8">
-                <button id="sub-btn" onclick="submit()" class="w-full hero-btn py-4 rounded-xl font-bold">Submit Payment</button>
-                <div id="success-msg" class="hidden text-center mt-6 text-green-400 font-bold">Payment Received! Verification in progress.</div>
-            </div>
-        </div>
+            <<div class="glass p-8 rounded-3xl relative">
+    
+			<div id="payment-form">
+				<h3 class="font-bold mb-6">Step 2: Verify Payment</h3>
+				<input type="email" id="email" placeholder="Email Address" class="w-full bg-transparent border border-gray-800 p-4 rounded-xl mb-4 outline-none focus:border-blue-500">
+				<input type="text" id="txid" placeholder="Transaction Hash (TXID)" class="w-full bg-transparent border border-gray-800 p-4 rounded-xl mb-4 outline-none focus:border-blue-500">
+				<p class="text-xs text-gray-500 mb-2">Upload Proof (Screenshot)</p>
+				<input type="file" id="file" class="w-full text-sm text-gray-500 mb-8">
+				<button id="sub-btn" onclick="submit()" class="w-full hero-btn py-4 rounded-xl font-bold">Submit Payment</button>
+			</div>
+
+			<div id="success-state" class="hidden absolute inset-0 bg-[#05070a] rounded-3xl flex flex-center items-center justify-center p-8 text-center">
+				<div class="border border-green-500/30 bg-green-500/10 p-10 rounded-3xl w-full">
+					<div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+						<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+						</svg>
+					</div>
+					<h3 class="text-2xl font-bold mb-4 text-white">Payment Submitted!</h3>
+					<p class="text-gray-400 text-sm leading-relaxed">
+						Your payment for <span id="conf-plan" class="text-white font-bold"></span> (<span id="conf-billing" class="text-white"></span>) is being verified. 
+						You will receive a confirmation email at <br>
+						<span id="conf-email" class="text-blue-400 font-bold"></span> once approved.
+					</p>
+				</div>
+			</div>
+
+		</div>>
+        
     </section>
 
     <script>
@@ -195,34 +214,44 @@
         }
 
         async function submit() {
-            const btn = document.getElementById('sub-btn');
-            const file = document.getElementById('file').files[0];
-            if(!file || !document.getElementById('email').value) return alert("Please fill all fields!");
+			const btn = document.getElementById('sub-btn');
+			const emailValue = document.getElementById('email').value;
+			const file = document.getElementById('file').files[0];
+			
+			if(!file || !emailValue) return alert("Please fill all fields!");
 
-            btn.innerText = "Processing...";
-            btn.disabled = true;
+			btn.innerText = "Processing...";
+			btn.disabled = true;
 
-            try {
-                const formData = new FormData();
-                formData.append("image", file);
-                const res = await fetch("https://api.imgbb.com/1/upload?key=b795e372fe07808e8261bd73ee82159e", { method: "POST", body: formData });
-                const data = await res.json();
+			try {
+				const formData = new FormData();
+				formData.append("image", file);
+				const res = await fetch("https://api.imgbb.com/1/upload?key=b795e372fe07808e8261bd73ee82159e", { method: "POST", body: formData });
+				const data = await res.json();
 
-                await emailjs.send("service_sqpgdob", "template_xsdd3v7", {
+				// Fandefasana mailaka
+				await emailjs.send("service_sqpgdob", "template_xsdd3v7", {
 					plan_name: document.getElementById('display-plan').innerText,
-					user_email: document.getElementById('email').value,
-					// Ovaina ho 'transaction_hash' mba hifanaraka amin'ny template EmailJS-nao
-					transaction_hash: document.getElementById('txid').value, 
+					user_email: emailValue,
+					transaction_hash: document.getElementById('txid').value,
 					receipt_url: data.data.url
-				});				
-				document.getElementById('success-msg').classList.remove('hidden');
-                btn.innerText = "Submitted ✅";
-            } catch (e) {
-                alert("Upload Error");
-                btn.disabled = false;
-                btn.innerText = "Submit Payment";
-            }
-        }
+				});
+
+				// 1. Fenoy ny fanazavana ao amin'ilay Success Box (Sary 201604023)
+				document.getElementById('conf-plan').innerText = document.getElementById('display-plan').innerText;
+				document.getElementById('conf-billing').innerText = currentBilling === 'monthly' ? 'Monthly' : 'Lifetime';
+				document.getElementById('conf-email').innerText = emailValue;
+
+				// 2. Afeno ny form ary asehoy ny fahombiazana
+				document.getElementById('payment-form').classList.add('hidden');
+				document.getElementById('success-state').classList.remove('hidden');
+
+			} catch (e) {
+				alert("Upload Error");
+				btn.disabled = false;
+				btn.innerText = "Submit Payment";
+			}
+		}
     </script>
 </body>
 </html>
