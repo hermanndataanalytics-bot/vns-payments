@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNS Terminal - Crypto Payment</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<style>
+body{
+    background:#05070a;
+    font-family: 'Inter', sans-serif;
+    color:white;
+}
+
+.glass{
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border:1px solid rgba(255,255,255,0.08);
+    transition:0.3s;
+}
+.glass:hover{
+    border-color:#3b82f6;
+    transform:translateY(-5px);
+}
+
+.gradient-text{
+    background: linear-gradient(90deg,#3b82f6,#06b6d4,#10b981);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-btn{
+    background:linear-gradient(90deg,#4f46e5,#3b82f6);
+    box-shadow:0 0 30px rgba(59,130,246,0.6);
+}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body class="p-6 md:p-12">
+
+<!-- HERO -->
+<section class="text-center py-16">
+<h1 class="text-5xl font-extrabold mb-6">
+Pay with <span class="gradient-text">Crypto</span>
+</h1>
+<p class="text-gray-400">Secure USDT Payments – Instant Activation</p>
+</section>
+
+<section id="pricing" class="max-w-7xl mx-auto mt-20">
+
+<div class="text-center mb-16">
+    <h2 class="text-5xl font-extrabold mb-6">
+        Select Your <span class="gradient-text">Trading Advantage</span>
+    </h2>
+    <p class="text-gray-400 text-lg">
+        Professional-grade tools. Institutional-grade intelligence.
+    </p>
+    <p class="text-blue-400 text-sm mt-3">
+        Limited spots available for Premium tier.
+    </p>
+</div>
+
+<div class="grid md:grid-cols-3 gap-10">
+
+<!-- BASIC -->
+<div class="glass p-10 rounded-3xl flex flex-col justify-between">
+
+    <div>
+        <h3 class="text-gray-400 font-bold text-lg">BASIC</h3>
+
+        <div class="my-6">
+            <span class="text-5xl font-extrabold">$19</span>
+            <span class="text-gray-400 text-sm">/month</span>
+        </div>
+
+        <ul class="space-y-3 text-gray-400 text-sm mb-8">
+            <li>✓ 3 Major Forex Assets</li>
+            <li>✓ Daily Market Overview</li>
+            <li>✓ Basic Risk Framework</li>
+            <li>✓ Email Support</li>
+        </ul>
+    </div>
+
+    <button onclick="openPayment('BASIC',19)"
+        class="w-full bg-gray-800 py-3 rounded-xl font-bold hover:bg-gray-700">
+        Get Started
+    </button>
+</div>
+
+
+<!-- PRO (CENTER FOCUS) -->
+<div class="glass p-12 rounded-3xl border border-blue-500 relative scale-105">
+
+    <div class="absolute -top-5 left-1/2 -translate-x-1/2 
+    bg-blue-600 px-6 py-2 rounded-full text-sm font-bold">
+        MOST POPULAR
+    </div>
+
+    <div>
+        <h3 class="text-blue-400 font-bold text-lg">PRO</h3>
+
+        <div class="my-6">
+            <span class="text-gray-500 line-through text-lg mr-2">$79</span>
+            <span class="text-6xl font-extrabold text-white">$49</span>
+            <span class="text-gray-400 text-sm">/month</span>
+        </div>
+
+        <ul class="space-y-3 text-gray-300 text-sm mb-8">
+            <li>✓ 12 Forex & Crypto Assets</li>
+            <li>✓ AI Market Intelligence Engine</li>
+            <li>✓ PDF Weekly Reports</li>
+            <li>✓ Smart Risk Optimization</li>
+            <li>✓ Signal Synchronization</li>
+            <li>✓ Priority Support</li>
+        </ul>
+    </div>
+
+    <button onclick="openPayment('PRO',49)"
+        class="w-full hero-btn py-4 rounded-xl font-bold text-lg">
+        Upgrade to PRO
+    </button>
+</div>
+
+
+<!-- PREMIUM -->
+<div class="glass p-10 rounded-3xl flex flex-col justify-between">
+
+    <div>
+        <h3 class="text-gray-400 font-bold text-lg">PREMIUM</h3>
+
+        <div class="my-6">
+            <span class="text-5xl font-extrabold">$149</span>
+            <span class="text-gray-400 text-sm">/month</span>
+        </div>
+
+        <ul class="space-y-3 text-gray-400 text-sm mb-8">
+            <li>✓ Everything in PRO</li>
+            <li>✓ Neural Prediction Engine</li>
+            <li>✓ Institutional Data Access</li>
+            <li>✓ Real-Time Sentiment Scanner</li>
+            <li>✓ Private Strategy Vault</li>
+            <li>✓ 24/7 Direct Priority Line</li>
+        </ul>
+    </div>
+
+    <button onclick="openPayment('PREMIUM',149)"
+        class="w-full bg-gray-800 py-3 rounded-xl font-bold hover:bg-gray-700">
+        Go Premium
+    </button>
+</div>
+
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="mt-24 glass p-10 rounded-3xl overflow-x-auto">
+
+<h3 class="text-2xl font-bold mb-8 text-center">
+Feature Comparison
+</h3>
+
+<table class="w-full text-sm text-left">
+<thead class="text-gray-400 border-b border-gray-700">
+<tr>
+<th class="py-3">Feature</th>
+<th>BASIC</th>
+<th>PRO</th>
+<th>PREMIUM</th>
+</tr>
+</thead>
+
+<tbody class="text-gray-300">
+<tr class="border-b border-gray-800">
+<td class="py-3">AI Analysis</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+
+<tr class="border-b border-gray-800">
+<td class="py-3">Crypto Dashboard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+</tr>
+
+<tr class="border-b border-gray-800">
+<td class="py-3">Neural Predictions</td>
+<td>—</td>
+<td>—</td>
+<td>✓</td>
+</tr>
+
+<tr>
+<td class="py-3">Priority Support</td>
+<td>—</td>
+<td>✓</td>
+<td>✓ (24/7)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</section>
+
+
+<!-- PAYMENT PAGE -->
+<section id="payment-page" class="hidden max-w-5xl mx-auto mt-16">
+
+<button onclick="goBack()" class="mb-6 text-blue-400">← Back</button>
+
+<div class="glass p-6 rounded-2xl mb-8 flex justify-between">
+<div>
+<h2 id="plan-name" class="font-bold text-xl"></h2>
+<p class="text-gray-400">Send exact amount in USDT</p>
+</div>
+<div class="text-3xl font-bold">$<span id="plan-price"></span></div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-8">
+
+<!-- LEFT -->
+<div class="glass p-8 rounded-3xl">
+
+<div class="flex gap-4 mb-6">
+<button onclick="switchNetwork('TRC20')" id="btn-trc"
+class="bg-blue-600 flex-1 py-2 rounded-xl font-bold text-sm">
+TRC20
+</button>
+<button onclick="switchNetwork('ERC20')" id="btn-erc"
+class="bg-gray-800 flex-1 py-2 rounded-xl font-bold text-sm text-gray-400">
+ERC20
+</button>
+</div>
+
+<div class="bg-white p-4 rounded-xl w-48 h-48 mx-auto mb-6">
+<img id="qr-img" class="w-full">
+</div>
+
+<p class="text-xs text-gray-400 mb-2">WALLET ADDRESS</p>
+
+<div class="bg-black p-3 rounded-xl text-xs break-all mb-4" id="wallet-addr"></div>
+
+<button onclick="copyAddress()" class="w-full bg-gray-800 py-2 rounded-xl text-sm">
+Copy Address
+</button>
+
+</div>
+
+<!-- RIGHT -->
+<div class="glass p-8 rounded-3xl">
+
+<h3 class="font-bold mb-6">Submit Payment Proof</h3>
+
+<input type="email" id="email" placeholder="Your Email"
+class="w-full bg-transparent border border-gray-700 p-3 rounded-xl mb-4">
+
+<input type="text" id="txid" placeholder="Transaction Hash (TXID)"
+class="w-full bg-transparent border border-gray-700 p-3 rounded-xl mb-4">
+
+<input type="file" id="file" class="mb-6 w-full text-sm">
+
+<button onclick="submitPayment()" id="submit-btn"
+class="w-full hero-btn py-3 rounded-xl font-bold">
+Submit Payment
+</button>
+
+<div id="success-msg" class="hidden text-center mt-6 text-green-400 font-bold">
+Payment Submitted Successfully ✅
+</div>
+
+</div>
+
+</div>
+</section>
+
+<script>
+emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
+
+const wallets={
+TRC20:"TRC20_WALLET_ADDRESS",
+ERC20:"ERC20_WALLET_ADDRESS"
+};
+
+let currentNetwork="TRC20";
+let selectedPlan="";
+let selectedPrice=0;
+
+function openPayment(plan,price){
+selectedPlan=plan;
+selectedPrice=price;
+
+document.getElementById('plan-name').innerText=plan;
+document.getElementById('plan-price').innerText=price;
+
+document.getElementById('pricing').classList.add('hidden');
+document.getElementById('payment-page').classList.remove('hidden');
+
+switchNetwork("TRC20");
+window.scrollTo(0,0);
+}
+
+function goBack(){
+document.getElementById('payment-page').classList.add('hidden');
+document.getElementById('pricing').classList.remove('hidden');
+}
+
+function switchNetwork(net){
+currentNetwork=net;
+document.getElementById('wallet-addr').innerText=wallets[net];
+document.getElementById('qr-img').src=
+`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${wallets[net]}`;
+
+document.getElementById('btn-trc').className=
+net==="TRC20"?
+"bg-blue-600 flex-1 py-2 rounded-xl font-bold text-sm":
+"bg-gray-800 flex-1 py-2 rounded-xl font-bold text-sm text-gray-400";
+
+document.getElementById('btn-erc').className=
+net==="ERC20"?
+"bg-blue-600 flex-1 py-2 rounded-xl font-bold text-sm":
+"bg-gray-800 flex-1 py-2 rounded-xl font-bold text-sm text-gray-400";
+}
+
+function copyAddress(){
+navigator.clipboard.writeText(wallets[currentNetwork]);
+alert("Address copied!");
+}
+
+async function submitPayment(){
+const email=document.getElementById('email').value;
+const txid=document.getElementById('txid').value;
+const file=document.getElementById('file').files[0];
+const btn=document.getElementById('submit-btn');
+
+if(!email||!txid||!file) return alert("Fill all fields");
+
+btn.innerText="Processing...";
+btn.disabled=true;
+
+try{
+const formData=new FormData();
+formData.append("image",file);
+
+const res=await fetch("https://api.imgbb.com/1/upload?key=YOUR_IMGBB_KEY",
+{method:"POST",body:formData});
+
+const data=await res.json();
+
+await emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+plan:selectedPlan,
+price:selectedPrice,
+network:currentNetwork,
+wallet:wallets[currentNetwork],
+txid:txid,
+email:email,
+receipt:data.data.url
+});
+
+document.getElementById('success-msg').classList.remove('hidden');
+btn.innerText="Submitted";
+}catch(e){
+alert("Error occurred");
+btn.disabled=false;
+btn.innerText="Submit Payment";
+}
+}
+</script>
+
+</body>
+</html>
